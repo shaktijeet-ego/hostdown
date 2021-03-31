@@ -9,9 +9,10 @@
         <th scope="col">OLT Name</th>
         <th scope="col">Downtime</th>
         <th scope="col">Uptime</th>
-        <th scope="col">Self</th>
-        <th scope="col">Count</th>
-        <th scope="col">Affected due to</th>
+        <th scope="col">Province</th>
+        <th scope="col">Client</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Uplink Down</th>
       </tr>
     </thead>
     <tbody>
@@ -23,8 +24,12 @@
         <td>{{oltdowns.downtime}}</td>
         <td>{{oltdowns.uptime}}</td>
         <td>{{oltdowns.province}}</td>
-        {% if olt_datas.down_self %}
-        <td><span style="background-color: red;">Uplink Down</span></td>
+        <td>{{oltdowns.client_count}}</td>
+        
+        <td>{{oltdowns.reason}}</td>
+        
+        {% if oltdowns.down_self %}
+        <td class="btn-success">{{oltdowns.down_self}}</span></td>
         {% endif %}
       </tr>
       {% endif %}
