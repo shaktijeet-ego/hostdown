@@ -1,0 +1,19 @@
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.N</th>
+        <th scope="col">OLT Name</th>
+        <th scope="col">Downtime</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for test_olts in test_olt %}
+      <tr>
+        <th scope="row">{{test_olts.id}}</th>
+        <td>{{test_olts.olt_name}}</td>
+        <td>{{test_olts.province}}</td>
+        
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
