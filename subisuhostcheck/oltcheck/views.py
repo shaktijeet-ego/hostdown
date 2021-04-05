@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 
 from . models import  OLT, Oltdown, Province
 
-from django.db.models import Count
+from django.db.models import Count, F
 
 import os
 
@@ -19,6 +19,7 @@ def dashboard(request):
 
 from datetime import datetime
 
+
 def index(request):
     #olt_data = OvccData.objects.all()
     olt_down = Oltdown.objects.all().order_by('-downtime')
@@ -30,16 +31,17 @@ def index(request):
     #for provinces in province:
         #pass
     #for hostname.objects.filter(province)
+
     for hostnames in hostname:
         response = os.system(f"ping -n 1 {hostnames}")
     #print(p)
     #print(type(response))
         if response==0:
-            print(f"{hostnames} +  is up")
+            pass
         else:
             print(f"{hostnames} +  is down")
             context = {'{hostnames}':hostname}
-            if Oltdown.objects.filter(olt_name__contains = hostnames):
+            if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
                 #print(Oltdown.objects.filter(olt_name = hostnames))
                 #print(f"{hostnames} already added")
                 pass
@@ -50,7 +52,8 @@ def index(request):
                 client_count=hostnames.client_count,
                 category=None)
                 olt_down.save()
-  
+
+
 
 
     return render(request, 'index.html',{'hostname':hostname,'oltdown':olt_down})
@@ -80,6 +83,7 @@ def update_olt_data(request, id):
 
 def down_list(request):
     olt_down = Oltdown.objects.all()
+    hostnames = OLT.objects.all()
     #if Oltdown.objects.filter(uptime__isnull = True):
     context = {
         'olt_down':olt_down

@@ -12,7 +12,5 @@ class OltDownForm(forms.ModelForm):
             
         }
 
-        def __init__(self, *args, **kwargs): 
-            super(OltDownForm, self).__init__(*args, **kwargs)                       
-            self.fields['olt_name'].disabled = True
+
         
