@@ -5,7 +5,7 @@ from bootstrap_datepicker_plus import DateTimePickerInput
 class OltDownForm(forms.ModelForm):
     class Meta:
         model = Oltdown
-        fields = ('olt_name','informed_to','reason','down_self')
+        fields = ('olt_name','informed_to','reason','down_self','uptime')
 
         widgets = {
             'uptime': DateTimePickerInput(),

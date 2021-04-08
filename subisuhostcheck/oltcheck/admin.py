@@ -9,5 +9,5 @@ admin.site.register(Category)
 admin.site.register(Reason)
 #admin.site.register(OvccData)
 admin.site.register(Oltdown)
-admin.site.register(ClientCount)
+#admin.site.register(ClientCount)
 

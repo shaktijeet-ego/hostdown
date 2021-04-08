@@ -26,7 +26,7 @@ def index(request):
     #context = {'oltdown':olt_down}
     #total_uptime_olts = olt_data.filter(down_self=True).count()
     #total_olts = olt_data.filter(olt_name=1).count()
-    hostname=OLT.objects.all()
+    hostname = OLT.objects.all()
     province = Province.objects.all()
     #for provinces in province:
         #pass
@@ -50,7 +50,8 @@ def index(request):
                 province=hostnames.province,
                 downtime=datetime.now(),
                 client_count=hostnames.client_count,
-                category=None)
+                category=None,
+                )
                 olt_down.save()
 
 

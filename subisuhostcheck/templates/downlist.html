@@ -13,6 +13,7 @@
         <th scope="col">Client</th>
         <th scope="col">Reason</th>
         <th scope="col">Uplink Down</th>
+        <th scope="col">Ack</th>
       </tr>
     </thead>
     <tbody>
@@ -25,12 +26,16 @@
         <td>{{oltdowns.uptime}}</td>
         <td>{{oltdowns.province}}</td>
         <td>{{oltdowns.client_count}}</td>
-        
         <td>{{oltdowns.reason}}</td>
         
+      
+
+        
+        
         {% if oltdowns.down_self %}
-        <td class="btn-success">{{oltdowns.down_self}}</span></td>
+        <td class="btn-success">{{oltdowns.down_self}}</td>
         {% endif %}
+        <td><a href="{% url 'updatedata' oltdowns.id %}" >Update</a></td>
       </tr>
       {% endif %}
       {% endfor %}
