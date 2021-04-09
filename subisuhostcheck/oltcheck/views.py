@@ -34,12 +34,13 @@ def index(request):
     #total_uptime_olts = olt_data.filter(down_self=True).count()
     #total_olts = olt_data.filter(olt_name=1).count()
     hostname = OLT.objects.all()
+    test = ['192.168.1.65']
     province = Province.objects.all()
     #for provinces in province:
         #pass
     #for hostname.objects.filter(province)
 
-    for hostnames in hostname[:50]:
+    for hostnames in hostname:
         thread = threading.Thread(target=threading_hosts, args=(hostnames,))
         thread.start()
         #print(p)
@@ -47,8 +48,11 @@ def index(request):
         response = threading_hosts(hostnames)
         print(f"**********************************{response}****")
         if response==0:
-            if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
-                pass
+            for olt_downs in olt_down:
+                if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
+                    Oltdown.objects.filter(id=olt_downs.id).update(uptime=datetime.now())
+                
+                    #print(olt_downs.id)
                 #Oltdown.objects.filter(uptime__isnull = True).update(uptime= datetime.now())
         else:
             print(f"{hostnames} +  is down")
