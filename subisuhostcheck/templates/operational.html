@@ -1,0 +1,39 @@
+{% extends 'base.html'%}
+
+{% block content %}
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">S.N</th>
+        <th scope="col">OLT Name</th>
+        <th scope="col">Downtime</th>
+        <th scope="col">Uptime</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Province</th>
+        <th scope="col">Update</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+        {% for oltdowns in olt_down %}
+      <tr>
+        <th scope="row">{{oltdowns.id}}</th>
+        <td>{{oltdowns.olt_name}}</td>
+        <td>{{oltdowns.downtime}}</td>
+        <td>{{oltdowns.uptime}}</td>
+        <td>{{oltdowns.reason}}</td>
+        <td>{{oltdowns.province}}</td>
+        <td><a href="{% url 'updatedata' oltdowns.id %}" >Update</a></td>
+        
+        
+        
+        <td><span style="background-color: red;">Uplink Down</span></td>
+    
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+
+{% endblock %}

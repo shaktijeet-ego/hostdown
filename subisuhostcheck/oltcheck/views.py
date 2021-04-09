@@ -20,11 +20,39 @@ def dashboard(request):
 
 
 from datetime import datetime
+from django.utils import timezone
 
 def threading_hosts(hostnames):
     response = os.system(f"ping -n 1 {hostnames}")
-    time.sleep(1)
-    return response
+    time.sleep(2)
+    olt_down = Oltdown.objects.all().order_by('-downtime')
+    hostname = OLT.objects.all()
+    province = Province.objects.all()
+    for provinces in province:
+        pass
+    #print(f"**********************************{response}****")
+    if response==0:
+        for olt_downs in olt_down:
+            if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
+                Oltdown.objects.filter(id=olt_downs.id).update(uptime=timezone.now())
+            
+                #print(olt_downs.id)
+            #Oltdown.objects.filter(uptime__isnull = True).update(uptime= datetime.now())
+    else:
+        print(f"{hostnames} +  is down")
+        
+        if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
+            print(f"{hostnames} already added")
+        else:
+            olt_down = Oltdown.objects.create(olt_name=str(hostnames),
+            province=hostnames.province,
+            downtime=timezone.now(),
+            client_count=hostnames.client_count,
+            category=None,
+            )
+            olt_down.save()
+            
+    
 
 
 def index(request):
@@ -34,12 +62,13 @@ def index(request):
     #total_uptime_olts = olt_data.filter(down_self=True).count()
     #total_olts = olt_data.filter(olt_name=1).count()
     hostname = OLT.objects.all()
-    province = Province.objects.all()
+    
+    #province = Province.objects.all()
     #for provinces in province:
         #pass
     #for hostname.objects.filter(province)
 
-    for hostnames in hostname[:50]:
+    for hostnames in hostname:
         thread = threading.Thread(target=threading_hosts, args=(hostnames,))
         thread.start()
         #print(p)
@@ -66,6 +95,8 @@ def index(request):
 
 
     return render(request, 'index.html',{'hostname':hostname,'oltdown':olt_down})
+
+    
 
 from .forms import OltDownForm
 
@@ -100,6 +131,15 @@ def down_list(request):
     #else:
         #pass
     return render(request, 'downlist.html',context)
+
+#FOR OPERATIONAL VIEW
+
+def operational(request):
+    olt_down = Oltdown.objects.filter(reason__exact='')
+    context={
+        'olt_down':olt_down
+    }
+    return render(request, 'operational.html',context)
 
 # """ def olt_down(request):
 #     p = subprocess.Popen('ping 192.168.0.110')
