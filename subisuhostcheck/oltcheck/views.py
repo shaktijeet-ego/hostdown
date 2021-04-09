@@ -45,7 +45,7 @@ def index(request):
         #print(p)
         #print(type(response))
         response = threading_hosts(hostnames)
-        print(f"**********************************{response}****")
+        #print(f"**********************************{response}****")
         if response==0:
             if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
                 pass
