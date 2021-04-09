@@ -5,6 +5,8 @@ from . models import  OLT, Oltdown, Province
 from django.db.models import Count, F
 
 import os
+import threading
+import time
 
 
 # Create your views here.
@@ -19,6 +21,11 @@ def dashboard(request):
 
 from datetime import datetime
 
+def threading_hosts(hostnames):
+    response = os.system(f"ping -n 1 {hostnames}")
+    time.sleep(1)
+    return response
+
 
 def index(request):
     #olt_data = OvccData.objects.all()
@@ -32,19 +39,22 @@ def index(request):
         #pass
     #for hostname.objects.filter(province)
 
-    for hostnames in hostname:
-        response = os.system(f"ping -n 1 {hostnames}")
-    #print(p)
-    #print(type(response))
+    for hostnames in hostname[:50]:
+        thread = threading.Thread(target=threading_hosts, args=(hostnames,))
+        thread.start()
+        #print(p)
+        #print(type(response))
+        response = threading_hosts(hostnames)
+        print(f"**********************************{response}****")
         if response==0:
-            pass
+            if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
+                pass
+                #Oltdown.objects.filter(uptime__isnull = True).update(uptime= datetime.now())
         else:
             print(f"{hostnames} +  is down")
             context = {'{hostnames}':hostname}
             if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
-                #print(Oltdown.objects.filter(olt_name = hostnames))
-                #print(f"{hostnames} already added")
-                pass
+                print(f"{hostnames} already added")
             else:
                 olt_down = Oltdown.objects.create(olt_name=str(hostnames),
                 province=hostnames.province,
@@ -53,8 +63,6 @@ def index(request):
                 category=None,
                 )
                 olt_down.save()
-
-
 
 
     return render(request, 'index.html',{'hostname':hostname,'oltdown':olt_down})
