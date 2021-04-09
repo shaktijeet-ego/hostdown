@@ -11,32 +11,45 @@ stri = '192.168.1.'
 ##        list.append(new_str)
 ##check_ip()
 ##print(list)
+##
+##uptime = []
+##uptime_data= []
+##
+##def ping(f):
+##    response = os.system(f"ping -n 1 {f}")
+##    return response
+##
+##x= 0
+##while x < 2:
+##    with open("olttest.txt","r") as fname:
+##        for f in fname:
+##            thread = threading.Thread(target=ping, args=(f,))
+##            thread.start()
+##            response = ping(f)
+##            if response == 0:
+##                print(f"{f} is up\n")
+##              
+##            else:
+##                print(f"{f} is down\n")
+##                if f in uptime:
+##                    continue
+##                else:
+##                    uptime.append(f)
+##            x= x+1
+##            print(x)
+##print(uptime)
+##
 
-uptime = []
-uptime_data= []
 
-def ping(f):
-    response = os.system(f"ping -n 1 {f}")
-    return response
+import concurrent.futures
 
-x= 0
-while x < 2:
-    with open("olttest.txt","r") as fname:
-        for f in fname:
-            thread = threading.Thread(target=ping, args=(f,))
-            thread.start()
-            response = ping(f)
-            if response == 0:
-                print(f"{f} is up\n")
-              
-            else:
-                print(f"{f} is down\n")
-                if f in uptime:
-                    continue
-                else:
-                    uptime.append(f)
-            x= x+1
-            print(x)
-print(uptime)
-            
+hosts = ['ganamnagar','gthankot']
+def ping(name):
+    response = os.system(f"ping -n 1 {name}")
+    if response == 0:
+        print("up")
+
+executor = concurrent.futures.ThreadPoolExecutor(254)
+ping_hosts = [executor.submit(ping, str(ip)) for ip in hosts]
+print(ping_hosts)
 
