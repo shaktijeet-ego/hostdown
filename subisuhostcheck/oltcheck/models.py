@@ -2,6 +2,14 @@ from django.db import models
 
 # Create your models here.
 
+COLOR_CHOICES = (
+    ('RF Duty Managers','RF Duty Managers'),
+    ('SPR', 'SPR'),
+    ('Province Team','Province Team'),
+    ('L2','L2'),
+    ('Power','Power'),
+)
+
 class Province(models.Model):
     province = models.CharField(max_length = 25)
 
@@ -60,7 +68,7 @@ class Oltdown(models.Model):
     province = models.ForeignKey(Province, on_delete = models.CASCADE)
     downtime = models.DateTimeField(auto_now=True)
     uptime = models.DateTimeField(blank=True, null = True)
-    informed_to = models.CharField(max_length = 25)
+    informed_to = models.CharField(max_length = 25,choices=COLOR_CHOICES )
     reason = models.CharField(max_length = 25, default = "")
     category = models.ForeignKey(Category, on_delete = models.CASCADE, blank=True, null=True)
     down_self = models.BooleanField(default = True)
