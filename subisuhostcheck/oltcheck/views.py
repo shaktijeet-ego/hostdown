@@ -73,9 +73,27 @@ def index(request):
         thread.start()
         #print(p)
         #print(type(response))
-        #response = threading_hosts(hostnames)
-    context = {'{hostnames}':hostname}
-        
+        response = threading_hosts(hostnames)
+        #print(f"**********************************{response}****")
+        if response==0:
+            if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
+                pass
+                #Oltdown.objects.filter(uptime__isnull = True).update(uptime= datetime.now())
+        else:
+            print(f"{hostnames} +  is down")
+            context = {'{hostnames}':hostname}
+            if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
+                print(f"{hostnames} already added")
+            else:
+                olt_down = Oltdown.objects.create(olt_name=str(hostnames),
+                province=hostnames.province,
+                downtime=datetime.now(),
+                client_count=hostnames.client_count,
+                category=None,
+                )
+                olt_down.save()
+
+
     return render(request, 'index.html',{'hostname':hostname,'oltdown':olt_down})
 
     
