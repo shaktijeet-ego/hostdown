@@ -77,7 +77,6 @@ def index(request):
     context = {'{hostnames}':hostname}
         
     return render(request, 'index.html',{'hostname':hostname,'oltdown':olt_down})
-
     
 
 from .forms import OltDownForm
