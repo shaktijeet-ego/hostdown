@@ -132,6 +132,33 @@ def add_down_data(request):
     context['form'] = form
     return render(request, "add.html",context)
 
+
+    ###################################################
+    #CHARTS
+    ###################################################
+
+from datetime import date
+from django.db.models.functions import TruncDay
+def google_charts(request):
+    oltdown = Oltdown.objects.all()
+    province = Province.objects.all()
+    t = Oltdown.objects.values('province_id').annotate(total=Count('id'))
+    olt = OLT.objects.values('province_id').annotate(total=Count('id'))
+    groupbydate = oltdown.filter(downtime__gte=date.today()).count()
+    totaldownindate = oltdown.annotate(date=TruncDay('downtime')).values('date').annotate(created_count=Count('id')) 
+    dates = oltdown.annotate(date=TruncDay('downtime')).values('date').distinct()   
+
+    context = {
+        'oltdown':oltdown,
+        'province':province,
+        't':t,
+        'olt':olt,
+        'groupbydate':groupbydate,
+        'totaldownindate':totaldownindate,
+        'dates':dates
+    }
+    return render(request, 'charts.html',context)
+
 # """ def olt_down(request):
 #     p = subprocess.Popen('ping 192.168.0.110')
 #     print(p) """

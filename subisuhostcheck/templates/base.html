@@ -25,12 +25,37 @@
     background-color:rgba(80, 146, 233, 0.5);
     padding:20px;
   }
+
+ .chartclass{
+   display:flex;
+   justify-content: space-evenly  ;
+   align-items:center;
+   margin: 10px;
+ 
+ }
+.charts{
+  border: 2px solid black;
+
+}
+ #canvas{
+   flex-grow: 2;
+   
+ }
+
+ .totaldowntoday{
+   padding: 20px;
+   font-size: 100px;
+   text-align: center;
+ }
 </style>
 
 
 </head>
 <body>
     <ul class="nav nav-tabs">
+      <li class="nav-item">
+        <a class="nav-link active" href="{% url 'dashboard' %}">Dashboard</a>
+      </li>
         <li class="nav-item">
           <a class="nav-link active" href="{% url 'index' %}">Home</a>
         </li>

@@ -1,0 +1,146 @@
+    {% extends 'base.html' %}
+
+    {% block content %}
+    
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="chartclass">
+        <div class="charts">
+            <div class="totaldowntoday" >
+                <h1>Total Down Today</h1>
+                <h1>{{groupbydate}}</h1>
+            </div>
+        </div>
+    <div class="charts">
+    <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+<div class="charts">
+    <canvas id="myOLTCountChart" width="400" height="400"></canvas>
+</div>
+
+    </div>
+    <div class="chartclass">
+        <div class="charts">
+            <canvas id="myChart1" width="400" height="400"></canvas>
+        </div>
+    </div>
+
+     <!--Chart For OLT Count in Each Province-->
+     <script>
+        var ctx = document.getElementById('myOLTCountChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: [{% for provinces in province %}'{{provinces.province}}',{% endfor %}],
+                datasets: [{
+                    label: 'OLTs in each province',
+                    data: [{% for olts in olt %}'{{olts.total}}',{% endfor %}],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 3
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+        </script>
+
+    <!--Chart For province Count-->
+    <script>
+    var ctx = document.getElementById('myChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: [{% for provinces in province %}'{{provinces.province}}',{% endfor %}],
+            datasets: [{
+                label: 'OLTs down from Province',
+                data: [{% for ts in t %}'{{ts.total}}',{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+
+<!--LINE CHART for down by date-->
+<script>
+    var ctx = document.getElementById('myChart1').getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: [{% for date in dates %}'{{date.date}}',{% endfor %}],
+            datasets: [{
+                label: 'OLTs down per day',
+                data: [{% for totaldownindates in totaldownindate %}'{{totaldownindates.created_count}}',{% endfor %}],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 3
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+    </script>
+   
+{% endblock %}
