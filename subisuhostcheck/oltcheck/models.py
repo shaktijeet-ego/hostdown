@@ -63,13 +63,15 @@ class Reason(models.Model):
 #     def __str__(self):
 #         return str(self.olt_name)
 
+OLT_Choices = (('test','test'),)
+
 class Oltdown(models.Model):
-    olt_name = models.CharField(max_length = 25)
+    olt_name = models.CharField(max_length = 25, choices = OLT_Choices)
     province = models.ForeignKey(Province, on_delete = models.CASCADE)
     downtime = models.DateTimeField(auto_now=True)
     uptime = models.DateTimeField(blank=True, null = True)
     informed_to = models.CharField(max_length = 25,choices=COLOR_CHOICES )
-    reason = models.CharField(max_length = 25, default = "")
+    reason = models.CharField(max_length = 25, default = "", blank = True)
     category = models.ForeignKey(Category, on_delete = models.CASCADE, blank=True, null=True)
     down_self = models.BooleanField(default = True)
     client_count = models.CharField(max_length = 2000, blank = True, null = True)

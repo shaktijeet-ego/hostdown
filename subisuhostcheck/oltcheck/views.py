@@ -52,6 +52,7 @@ def threading_hosts(hostnames):
             )
             olt_down.save()
             
+            
     
 
 
@@ -79,7 +80,7 @@ def index(request):
     return render(request, 'index.html',{'hostname':hostname,'oltdown':olt_down})
     
 
-from .forms import OltDownForm
+from .forms import OltDownForm, OltDownUpdate
 
 def olt_update_form(request,id):
     context={}
@@ -121,6 +122,15 @@ def operational(request):
         'olt_down':olt_down
     }
     return render(request, 'operational.html',context)
+
+def add_down_data(request):
+    context={}
+    form = OltDownUpdate(request.POST or None)
+    if form.is_valid():
+        form.save()
+        return('downlist')
+    context['form'] = form
+    return render(request, "add.html",context)
 
 # """ def olt_down(request):
 #     p = subprocess.Popen('ping 192.168.0.110')

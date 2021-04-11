@@ -13,4 +13,13 @@ class OltDownForm(forms.ModelForm):
         }
 
 
+class OltDownUpdate(forms.ModelForm):
+    class Meta:
+        model = Oltdown
+        fields = '__all__'
+
         
+        widgets = {
+            'uptime': DateTimePickerInput(),
+            
+        }
