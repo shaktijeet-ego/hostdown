@@ -147,6 +147,7 @@ def google_charts(request):
     groupbydate = oltdown.filter(downtime__gte=date.today()).count()
     totaldownindate = oltdown.annotate(date=TruncDay('downtime')).values('date').annotate(created_count=Count('id')) 
     dates = oltdown.annotate(date=TruncDay('downtime')).values('date').distinct()   
+    uplink_down = oltdown.filter(down_self = False).count()
 
     context = {
         'oltdown':oltdown,
@@ -155,7 +156,8 @@ def google_charts(request):
         'olt':olt,
         'groupbydate':groupbydate,
         'totaldownindate':totaldownindate,
-        'dates':dates
+        'dates':dates,
+        'uplink_down':uplink_down
     }
     return render(request, 'charts.html',context)
 

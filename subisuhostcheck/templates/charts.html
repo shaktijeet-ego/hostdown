@@ -11,6 +11,10 @@
                 <h1>Total Down Today</h1>
                 <h1>{{groupbydate}}</h1>
             </div>
+            <div class="totaldowntoday" >
+                <h1>Affected due to uplink down</h1>
+                <h1>{{uplink_down}}</h1>
+            </div>
         </div>
     <div class="charts">
     <canvas id="myChart" width="400" height="400"></canvas>
@@ -142,5 +146,7 @@
         }
     });
     </script>
+
+    test
    
 {% endblock %}

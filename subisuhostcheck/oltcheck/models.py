@@ -66,7 +66,7 @@ class Reason(models.Model):
 OLT_Choices = (('test','test'),)
 
 class Oltdown(models.Model):
-    olt_name = models.CharField(max_length = 25, choices = OLT_Choices)
+    olt_name = models.CharField(max_length = 25)
     province = models.ForeignKey(Province, on_delete = models.CASCADE)
     downtime = models.DateTimeField(auto_now=True)
     uptime = models.DateTimeField(blank=True, null = True)
