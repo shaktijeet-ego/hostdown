@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'bootstrap_datepicker_plus',
     'kitsune',
+    'django_crontab',
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap4"
@@ -89,7 +90,7 @@ DATABASES = {
         'USER':'root',
         'PASSWORD':'',
         'PORT':'3306',
-        'HOST':'localhost'
+        'HOST':'127.0.0.1'
 
 
     }
@@ -133,3 +134,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+CRONJOBS = [
+    ('* * * * * ','oltcheck.cron.cron_olt','>> /home/alterego/Documents/file.log')
+]
+
+
