@@ -9,6 +9,7 @@ import threading
 import time
 from datetime import datetime
 from django.utils import timezone
+
 def threading_hosts(hostnames):
     response = os.system(f"ping -c 1 {hostnames}")
     time.sleep(2)
@@ -19,6 +20,7 @@ def threading_hosts(hostnames):
         pass
     #print(f"**********************************{response}****")
     if response==0:
+     
         for olt_downs in olt_down:
             if Oltdown.objects.filter(olt_name__contains = hostnames) & Oltdown.objects.filter(uptime__isnull = True):
                 Oltdown.objects.filter(id=olt_downs.id).update(uptime=timezone.now())
@@ -56,7 +58,7 @@ def cron_olt():
         #pass
     #for hostname.objects.filter(province)
 
-    for hostnames in hostname:
+    for hostnames in hostname[364:]:
         thread = threading.Thread(target=threading_hosts, args=(hostnames,))
         thread.start()
         #print(p)
