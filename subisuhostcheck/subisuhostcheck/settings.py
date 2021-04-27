@@ -41,7 +41,6 @@ INSTALLED_APPS = [
     'oltcheck',
     'crispy_forms',
     'bootstrap_datepicker_plus',
-    'kitsune',
     'django_crontab',
 ]
 
@@ -88,7 +87,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'hostcheck',
         'USER':'root',
-        'PASSWORD':'',
+        'PASSWORD':'tri372647',
         'PORT':'3306',
         'HOST':'127.0.0.1'
 

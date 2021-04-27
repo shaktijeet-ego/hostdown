@@ -10,7 +10,7 @@ import time
 from datetime import datetime
 from django.utils import timezone
 def threading_hosts(hostnames):
-    response = os.system(f"ping -n 1 {hostnames}")
+    response = os.system(f"ping -c 1 {hostnames}")
     time.sleep(2)
     olt_down = Oltdown.objects.all().order_by('-downtime')
     hostname = OLT.objects.all()
