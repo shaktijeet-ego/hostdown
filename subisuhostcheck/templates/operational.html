@@ -25,7 +25,7 @@
         <td>{{oltdowns.uptime}}</td>
         <td>{{oltdowns.reason}}</td>
         <td>{{oltdowns.province}}</td>
-        <td><a href="{% url 'updatedata' oltdowns.id %}" >Update</a></td>
+        <td><a href="{% url 'updatedata' oltdowns.id %}" ><button type="button" class="btn btn-primary">Update</button></a></td>
         <td><span style="background-color: red;">Uplink Down</span></td>
     {% endif %}
       </tr>

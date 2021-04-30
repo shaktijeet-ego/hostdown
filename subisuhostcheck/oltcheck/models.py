@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 
-COLOR_CHOICES = (
+Team_CHOICES = (
     ('RF Duty Managers','RF Duty Managers'),
     ('SPR', 'SPR'),
     ('Province Team','Province Team'),
@@ -68,12 +68,12 @@ OLT_Choices = (('test','test'),)
 class Oltdown(models.Model):
     olt_name = models.CharField(max_length = 25)
     province = models.ForeignKey(Province, on_delete = models.CASCADE)
-    downtime = models.DateTimeField(auto_now=True)
+    downtime = models.DateTimeField(auto_now_add=True)
     uptime = models.DateTimeField(blank=True, null = True)
-    informed_to = models.CharField(max_length = 25,choices=COLOR_CHOICES )
+    informed_to = models.CharField(max_length = 25,choices=Team_CHOICES )
     reason = models.CharField(max_length = 25, default = "", blank = True)
     category = models.ForeignKey(Category, on_delete = models.CASCADE, blank=True, null=True)
-    down_self = models.BooleanField(default = True)
+    down_self = models.BooleanField(default = False)
     client_count = models.CharField(max_length = 2000, blank = True, null = True)
 
     def __str__(self):

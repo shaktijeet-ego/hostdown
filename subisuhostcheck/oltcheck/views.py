@@ -28,26 +28,42 @@ def index(request):
 
 from .forms import OltDownForm, OltDownUpdate
 
+#OLT UPDATE VIEW
+
 def olt_update_form(request,id):
-    context={}
-
-    obj = get_object_or_404(Oltdown,id=id)
-    form = OltDownForm(request.POST or None, instance=obj)
-
-    if form.is_valid():
-        form.save()
-        return redirect('/')
     
-    context["form"] = form
+
+    order = Oltdown.objects.get(id=id)
+    form = OltDownForm(instance=order)
+    if request.method == 'POST':
+        form = OltDownForm(request.POST, instance=order)
+        if form.is_valid():
+            form.save()
+            return redirect('/')
+            
+    context = {'form':form}
+    return render(request, 'update.html', context)
+
+    # context={}
+
+    # obj = get_object_or_404(Oltdown,id=id)
+
+    # form = OltDownForm(request.POST or None, instance=obj)
+
+    # if form.is_valid():
+    #     form.save()
+    #     return redirect('/')
+    
+    # context["form"] = form
 
 
-    return render(request,"update.html",context)
+    # return render(request,"update.html",context)
 
-def update_olt_data(request, id):
-    if request.method == 'Post':
-        pi = Oltdown.objects.get(pk=id)
+# def update_olt_data(request, id):
+#     if request.method == 'Post':
+#         pi = Oltdown.objects.get(pk=id)
         
-    return render(request,'update.html',{'id':id})
+#     return render(request,'update.html',{'id':id})
 
 def down_list(request):
     olt_down = Oltdown.objects.all()
@@ -78,6 +94,11 @@ def add_down_data(request):
     context['form'] = form
     return render(request, "add.html",context)
 
+
+######OLT DATA ############
+def olt(request):
+    olt = OLT.objects.all()
+    return render(request, 'olt.html',{'olt':olt})
 
     ###################################################
     #CHARTS

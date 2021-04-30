@@ -2,6 +2,8 @@
 
 {% block content%}
 
+
+
 <table class="table">
     <thead>
       <tr>
@@ -27,15 +29,10 @@
         <td>{{oltdowns.province}}</td>
         <td>{{oltdowns.client_count}}</td>
         <td>{{oltdowns.reason}}</td>
-        
-      
-
-        
-        
         {% if oltdowns.down_self %}
-        <td class="btn-success">{{oltdowns.down_self}}</td>
+        <td>{{oltdowns.down_self}}</td>
         {% endif %}
-        <td><a href="{% url 'updatedata' oltdowns.id %}" >Update</a></td>
+        <td><a href="{% url 'updatedata' oltdowns.id %}" ><button type="button" class="btn btn-primary">Update</button></a></td>
       </tr>
       {% endif %}
       {% endfor %}

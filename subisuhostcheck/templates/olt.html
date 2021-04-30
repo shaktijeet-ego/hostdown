@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <div class="container">
+    <button class="primary">Add OLT</button>
+</div>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>S.N</th>
+          <th>OLT Name</th>
+          <th>Province</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for olts in olt %}
+        <tr>
+          <td>{{olts.id}}</td>
+          <td>{{olts.olt_name}}</td>
+          <td>{{olts.province}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  
+
+{% endblock %}

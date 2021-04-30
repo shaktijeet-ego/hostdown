@@ -58,7 +58,7 @@ def cron_olt():
         #pass
     #for hostname.objects.filter(province)
 
-    for hostnames in hostname[364:]:
+    for hostnames in hostname:
         thread = threading.Thread(target=threading_hosts, args=(hostnames,))
         thread.start()
         #print(p)
